@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package edu.cnm.deepdive.appstarter.model.entity;
+package edu.cnm.deepdive.zoomattendance.model.entity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

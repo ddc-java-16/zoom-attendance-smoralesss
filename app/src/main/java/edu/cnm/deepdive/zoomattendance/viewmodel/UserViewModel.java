@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package edu.cnm.deepdive.appstarter.viewmodel;
+package edu.cnm.deepdive.zoomattendance.viewmodel;
 
 import android.content.Context;
 import android.util.Log;
@@ -26,8 +26,8 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import dagger.hilt.android.qualifiers.ApplicationContext;
-import edu.cnm.deepdive.appstarter.model.entity.User;
-import edu.cnm.deepdive.appstarter.service.UserRepository;
+import edu.cnm.deepdive.zoomattendance.model.entity.User;
+import edu.cnm.deepdive.zoomattendance.service.UserRepository;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import java.util.List;
 import javax.inject.Inject;

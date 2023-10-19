@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.appstarter.hilt;
+package edu.cnm.deepdive.zoomattendance.hilt;
 
 import android.content.Context;
 import androidx.room.Room;
@@ -7,8 +7,8 @@ import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
-import edu.cnm.deepdive.appstarter.model.dao.UserDao;
-import edu.cnm.deepdive.appstarter.service.LocalDatabase;
+import edu.cnm.deepdive.zoomattendance.model.dao.UserDao;
+import edu.cnm.deepdive.zoomattendance.service.LocalDatabase;
 import javax.inject.Singleton;
 
 /**

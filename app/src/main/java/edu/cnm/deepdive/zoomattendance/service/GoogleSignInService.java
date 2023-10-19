@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package edu.cnm.deepdive.appstarter.service;
+package edu.cnm.deepdive.zoomattendance.service;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -29,6 +29,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import dagger.hilt.android.qualifiers.ApplicationContext;
+import edu.cnm.deepdive.zoomattendance.viewmodel.LoginViewModel;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleEmitter;
@@ -41,7 +42,7 @@ import javax.inject.Singleton;
  * token, and signing out. This class is implemented as a singleton, and the implementation is
  * thread-safe; however to minimize the risk of concurrency issues in the underlying Google Sign In
  * client library, this class should be consumed by a single viewmodel (e.g.
- * {@link edu.cnm.deepdive.appstarter.viewmodel.LoginViewModel}).
+ * {@link LoginViewModel}).
  */
 @SuppressWarnings("unused")
 @Singleton

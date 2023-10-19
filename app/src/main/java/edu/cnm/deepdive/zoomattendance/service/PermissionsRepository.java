@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package edu.cnm.deepdive.appstarter.service;
+package edu.cnm.deepdive.zoomattendance.service;
 
 import android.app.Activity;
 import android.content.Context;
@@ -28,6 +28,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.NavController;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import edu.cnm.deepdive.appstarter.NavigationGraphDirections;
+import edu.cnm.deepdive.zoomattendance.viewmodel.PermissionsViewModel;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,7 +44,7 @@ import javax.inject.Singleton;
  * {@link #requestPermissions(Activity, String[])}, and
  * {@link #handlePermissionsRequestResult(int, String[], int[])} methods are <em>not</em>
  * thread-safe; as a rule, those should be invoked only by an instance of
- * {@link edu.cnm.deepdive.appstarter.viewmodel.PermissionsViewModel}, which should in turn be
+ * {@link PermissionsViewModel}, which should in turn be
  * scoped to the main activity of the app.
  */
 @Singleton

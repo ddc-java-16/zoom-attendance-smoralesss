@@ -29,5 +29,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "android-app-starter-headless"
+rootProject.name = "zoom-attendance"
 include(":app")

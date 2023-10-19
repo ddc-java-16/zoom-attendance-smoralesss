@@ -13,11 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package edu.cnm.deepdive.appstarter.service;
+package edu.cnm.deepdive.zoomattendance.service;
 
 import androidx.lifecycle.LiveData;
-import edu.cnm.deepdive.appstarter.model.dao.UserDao;
-import edu.cnm.deepdive.appstarter.model.entity.User;
+import edu.cnm.deepdive.zoomattendance.model.dao.UserDao;
+import edu.cnm.deepdive.zoomattendance.model.entity.User;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.DisposableContainer;

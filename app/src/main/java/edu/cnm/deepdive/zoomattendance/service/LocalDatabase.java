@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package edu.cnm.deepdive.appstarter.service;
+package edu.cnm.deepdive.zoomattendance.service;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,9 +22,9 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-import edu.cnm.deepdive.appstarter.model.dao.UserDao;
-import edu.cnm.deepdive.appstarter.model.entity.User;
-import edu.cnm.deepdive.appstarter.service.LocalDatabase.Converters;
+import edu.cnm.deepdive.zoomattendance.model.dao.UserDao;
+import edu.cnm.deepdive.zoomattendance.model.entity.User;
+import edu.cnm.deepdive.zoomattendance.service.LocalDatabase.Converters;
 import java.time.Instant;
 
 /**

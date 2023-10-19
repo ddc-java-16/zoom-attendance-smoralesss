@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package edu.cnm.deepdive.appstarter.model.dao;
+package edu.cnm.deepdive.zoomattendance.model.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -21,7 +21,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-import edu.cnm.deepdive.appstarter.model.entity.User;
+import edu.cnm.deepdive.zoomattendance.model.entity.User;
 import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
 import java.util.Collection;
