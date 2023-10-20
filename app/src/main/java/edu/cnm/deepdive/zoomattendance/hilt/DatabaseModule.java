@@ -7,13 +7,15 @@ import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
+import edu.cnm.deepdive.zoomattendance.model.dao.StudentDao;
 import edu.cnm.deepdive.zoomattendance.model.dao.UserDao;
-import edu.cnm.deepdive.zoomattendance.service.LocalDatabase;
+import edu.cnm.deepdive.zoomattendance.model.dao.ZoomMeetingDao;
+import edu.cnm.deepdive.zoomattendance.service.ZoomAttendanceDatabase;
 import javax.inject.Singleton;
 
 /**
  * Uses Dagger {@link Provides @Provides}-annotated methods to satisfy dependencies on concrete
- * implementations of {@link LocalDatabase} and {@link UserDao}.
+ * implementations of {@link ZoomAttendanceDatabase} and {@link UserDao}.
  */
 @InstallIn(SingletonComponent.class)
 @Module
@@ -25,18 +27,30 @@ public final class DatabaseModule {
 
   @Provides
   @Singleton
-  LocalDatabase provideLocalDatabase(@ApplicationContext Context context) {
+  ZoomAttendanceDatabase provideLocalDatabase(@ApplicationContext Context context) {
     return Room
-        .databaseBuilder(context, LocalDatabase.class, LocalDatabase.NAME)
-        .addCallback(new LocalDatabase.Callback())
+        .databaseBuilder(context, ZoomAttendanceDatabase.class, ZoomAttendanceDatabase.NAME)
+        .addCallback(new ZoomAttendanceDatabase.Callback())
         .build();
   }
 
   @Provides
-  UserDao provideUserDao(LocalDatabase database) {
+  @Singleton
+  UserDao provideUserDao(ZoomAttendanceDatabase database) {
     return database.getUserDao();
   }
 
+  @Provides
+  @Singleton
+  StudentDao providesStudentDao(ZoomAttendanceDatabase database) {
+    return database.getStudentDao();
+  }
+
+  @Provides
+  @Singleton
+  ZoomMeetingDao providesZoomMeetingDao(ZoomAttendanceDatabase database) {
+    return database.getZoomMeetingDao();
+  }
   // TODO Add additional methods so satisfy dependencies on other DAO interface implementations.
 
 }

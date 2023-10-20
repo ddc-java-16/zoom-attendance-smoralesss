@@ -23,7 +23,7 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import dagger.hilt.android.qualifiers.ApplicationContext;
-import edu.cnm.deepdive.appstarter.R;
+import edu.cnm.deepdive.zoomattendance.R;
 import edu.cnm.deepdive.zoomattendance.service.PreferencesRepository;
 import javax.inject.Inject;
 import kotlin.jvm.functions.Function1;

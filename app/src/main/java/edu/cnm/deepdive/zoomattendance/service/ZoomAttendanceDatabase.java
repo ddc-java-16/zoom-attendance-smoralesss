@@ -22,9 +22,13 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import edu.cnm.deepdive.zoomattendance.model.dao.StudentDao;
 import edu.cnm.deepdive.zoomattendance.model.dao.UserDao;
+import edu.cnm.deepdive.zoomattendance.model.dao.ZoomMeetingDao;
+import edu.cnm.deepdive.zoomattendance.model.entity.Student;
 import edu.cnm.deepdive.zoomattendance.model.entity.User;
-import edu.cnm.deepdive.zoomattendance.service.LocalDatabase.Converters;
+import edu.cnm.deepdive.zoomattendance.model.entity.ZoomMeeting;
+import edu.cnm.deepdive.zoomattendance.service.ZoomAttendanceDatabase.Converters;
 import java.time.Instant;
 
 /**
@@ -32,16 +36,16 @@ import java.time.Instant;
  * using data-access object (DAO) instances obtained from the singleton instance of this class.
  */
 @Database(
-    entities = {User.class},
+    entities = {User.class, Student.class, ZoomMeeting.class},
     version = 1
 )
 @TypeConverters({Converters.class})
-public abstract class LocalDatabase extends RoomDatabase { // TODO Change to more app-specific name.
+public abstract class ZoomAttendanceDatabase extends RoomDatabase { // TODO Change to more app-specific name.
 
   /**  Name of SQLite database file. */
   public static final String NAME = "starter"; // TODO Change to more app-specific value.
 
-  LocalDatabase() {
+  ZoomAttendanceDatabase() {
     // Package-private constructor to avoid automatic HTML generation for Javadocs.
   }
 
@@ -51,6 +55,9 @@ public abstract class LocalDatabase extends RoomDatabase { // TODO Change to mor
    */
   public abstract UserDao getUserDao();
 
+  public abstract StudentDao getStudentDao();
+
+  public abstract ZoomMeetingDao getZoomMeetingDao();
   // TODO Declare abstract accessors (aka getters) for other DAOs used in this project.
 
   /**

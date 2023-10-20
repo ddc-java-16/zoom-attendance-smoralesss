@@ -30,7 +30,7 @@ import kotlin.jvm.functions.Function1;
  * Implements a {@link LiveData}-based repository of preferences. It does not provide any preference
  * mutation methods, and is of most use when all preferences are being modified through user
  * interaction with an instance of a {@link androidx.preference.PreferenceFragmentCompat} subclass
- * (such as {@link edu.cnm.deepdive.appstarter.controller.SettingsActivity.SettingsFragment}).
+ * (such as).
  */
 @Singleton
 public class PreferencesRepository {
