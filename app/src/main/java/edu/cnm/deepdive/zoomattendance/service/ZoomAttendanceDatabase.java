@@ -31,16 +31,13 @@ import edu.cnm.deepdive.zoomattendance.model.entity.ZoomMeeting;
 import edu.cnm.deepdive.zoomattendance.service.ZoomAttendanceDatabase.Converters;
 import java.time.Instant;
 
-/**
- * Defines a connection to a local Room/SQLite database, All database reads/writes are performed
- * using data-access object (DAO) instances obtained from the singleton instance of this class.
- */
+
 @Database(
     entities = {User.class, Student.class, ZoomMeeting.class},
     version = 1
 )
 @TypeConverters({Converters.class})
-public abstract class ZoomAttendanceDatabase extends RoomDatabase { // TODO Change to more app-specific name.
+public abstract class ZoomAttendanceDatabase extends RoomDatabase {
 
   /**  Name of SQLite database file. */
   public static final String NAME = "starter"; // TODO Change to more app-specific value.
@@ -58,7 +55,7 @@ public abstract class ZoomAttendanceDatabase extends RoomDatabase { // TODO Chan
   public abstract StudentDao getStudentDao();
 
   public abstract ZoomMeetingDao getZoomMeetingDao();
-  // TODO Declare abstract accessors (aka getters) for other DAOs used in this project.
+
 
   /**
    * Defines converters for otherwise unsupported types (initially, just {@link Instant}) to one of
@@ -108,6 +105,9 @@ public abstract class ZoomAttendanceDatabase extends RoomDatabase { // TODO Chan
       // TODO Obtain DAO instances from database, and use them to perform any required preloads, e.g.
       //  LocalDatabase database = LocalDatabase.getInstance();
       //  etc.
+//      ZoomAttendanceDatabase zoomAttendanceDatabase = ZoomAttendanceDatabase.getUserDao();
+//      ZoomAttendanceDatabase zoomAttendanceDatabase1 = ZoomAttendanceDatabase.getStudentDao();
+//      ZoomAttendanceDatabase zoomAttendanceDatabase2 = ZoomAttendanceDatabase.getZoomMeetingDao();
     }
 
   }
