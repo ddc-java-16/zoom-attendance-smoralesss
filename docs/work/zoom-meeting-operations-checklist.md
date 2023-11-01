@@ -15,7 +15,7 @@ Note that the pairs of square brackets below are rendered as checkboxes in GitHu
     
 ### Read/query/select
 
-* [ ] Single instance 
+* [x] Single instance 
 * [x] Multiple instances 
 
 ### Update
@@ -26,7 +26,7 @@ Note that the pairs of square brackets below are rendered as checkboxes in GitHu
 ### Delete
 
 * [x] Single instance 
-* [ ] Multiple instances 
+* [x] Multiple instances 
 
 
 ## Queries
@@ -35,15 +35,15 @@ For any queries (i.e. selecting from the database) that you think you will need 
 
 Copy and paste the section below as many times as necessary, for all of the queries you currently anticipate implementing for this entity.
 
-### Query: "All zoom meetings"
+### Query: "CREATE/INSERT a zoom meeting"
 
 Purpose
 
-: To be able to query and see all instances of the zoom meetings in the database.
+: To be able to create/insert a zoom meeting in the database.
 
 Cardinality/modality
 
-: Many/required.
+: one/required.
  
 Filter
 
@@ -52,4 +52,78 @@ Filter
 Sort order
 
 : ASC
+
+### Query: "Read/query/SELECT a zoom meeting"
+
+Purpose
+
+: To be able to query/read/select a zoom meeting in the database.
+
+Cardinality/modality
+
+: one/required.
+
+Filter
+
+: zoom_meeting_id; student_id; created
+
+Sort order
+
+: ASC; ASC; DESC
+
+### Query: "GET all zoom meetings"
+
+Purpose
+
+: To be able to query and see all instances of the zoom meetings in the database.
+
+Cardinality/modality
+
+: Many/required.
+
+Filter
+
+: zoom_meeting_id; student_id; created
+
+Sort order
+
+: ASC; ASC; DESC
+
+### Query: "DELETE a zoom meeting"
+
+Purpose
+
+: To be able to delete a zoom meeting in the database.
+
+Cardinality/modality
+
+: one/required.
+
+Filter
+
+: zoom_meeting_id; student_id
+
+Sort order
+
+: ASC; ASC
+
+### Query: "DELETE all zoom meetings"
+
+Purpose
+
+: To be able to delete all zoom meetings in the database.
+
+Cardinality/modality
+
+: Many/required.
+
+Filter
+
+: zoom_meeting_id; student_id 
+
+Sort order
+
+: ASC; ASC
+
+
 

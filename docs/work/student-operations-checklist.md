@@ -1,6 +1,6 @@
 # Entity Operations Checklist
 
-## Entity name: {_Replace this placeholder (including the braces) with the entity class name._}
+## Entity name: Student
 
 ## Operations
 
@@ -10,22 +10,22 @@ Note that the pairs of square brackets below are rendered as checkboxes in GitHu
 
 ### Create/insert
     
-* [ ] Single instance 
+* [x] Single instance 
 * [ ] Multiple instances 
     
 ### Read/query/select
 
-* [ ] Single instance 
+* [x] Single instance 
 * [ ] Multiple instances 
 
 ### Update
 
-* [ ] Single instance 
+* [x] Single instance 
 * [ ] Multiple instances 
 
 ### Delete
 
-* [ ] Single instance 
+* [x] Single instance 
 * [ ] Multiple instances 
 
 
@@ -35,11 +35,11 @@ For any queries (i.e. selecting from the database) that you think you will need 
 
 Copy and paste the section below as many times as necessary, for all of the queries you currently anticipate implementing for this entity.
 
-### Query: {_Replace this placeholder---including the braces---with a simple label for the query---e.g. "All favorites"._}
+### Query: "All students".
 
 Purpose
 
-: {Replace this placeholder---including the braces, but not including the colon character and the space that follows it---with a sentence or two summarizing the purpose of the query.}
+: 
 
 Cardinality/modality
 
