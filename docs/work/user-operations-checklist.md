@@ -10,22 +10,22 @@ Note that the pairs of square brackets below are rendered as checkboxes in GitHu
 
 ### Create/insert
     
-* [ ] Single instance 
+* [x] Single instance 
 * [ ] Multiple instances 
     
 ### Read/query/select
 
-* [ ] Single instance 
+* [x] Single instance 
 * [ ] Multiple instances 
 
 ### Update
 
-* [ ] Single instance 
+* [x] Single instance 
 * [ ] Multiple instances 
 
 ### Delete
 
-* [ ] Single instance 
+* [x] Single instance 
 * [ ] Multiple instances 
 
 
@@ -35,21 +35,75 @@ For any queries (i.e. selecting from the database) that you think you will need 
 
 Copy and paste the section below as many times as necessary, for all of the queries you currently anticipate implementing for this entity.
 
-### Query: {_Replace this placeholder---including the braces---with a simple label for the query---e.g. "All favorites"._}
+### Query: "Create/INSERT a user"
 
 Purpose
 
-: {Replace this placeholder---including the braces, but not including the colon character and the space that follows it---with a sentence or two summarizing the purpose of the query.}
+: To be able to create or insert a user into the database.
 
 Cardinality/modality
 
-: {Replace this placeholder---including the braces, but not including the colon character and the space that follows it---with the expected query cardinality & modality. Cardinality should be either "one" or "many", and modality should be either "required" or "optional". For example, a query intended to return all scores of a game has a cardinality/modality combination of "many/optional".}
- 
+: one/required.
+
 Filter
 
-: {Replace this placeholder---including the braces, but not including the colon character and the space that follows it---with the list of fields of the entity that will be used to filter the query. For example, if this is a `Comment` entity, with a `posted` field that holds the date a comment was recorded, and you intend to include a query that shows only the last 30 days of comments, you would filter on that `posted` field.}
- 
+: display_name
+
 Sort order
 
-: {Replace this placeholder---including the braces, but not including the colon character and the space that follows it---with the list of fields of the entity that will be used to sort the query, along with an indicator of ascending or descending order. For example, if the entity is `Task` in a to-do list application, and `Task` has a `dueDate` field, you might want to say "dueDate, ascending".}
+: ASC/DESC
+
+### Query: "Query/read/SELECT a user"
+
+Purpose
+
+: To be able to select a user from the database.
+
+Cardinality/modality
+
+: one/required.
+
+Filter
+
+: display_name
+
+Sort order
+
+: ASC/DESC
+
+### Query: "Update a user"
+
+Purpose
+
+: To be able to update a user from the database.
+
+Cardinality/modality
+
+: one/required.
+
+Filter
+
+: display_name
+
+Sort order
+
+: ASC/DESC
+
+### Query: "DELETE a user"
+
+Purpose
+
+: To be able to delete a user from the database.
+
+Cardinality/modality
+
+: one/required.
+
+Filter
+
+: display_name
+
+Sort order
+
+: ASC/DESC
 
