@@ -9,7 +9,7 @@ order: 0
 
 ## Summary
 
-Replace this paragraph with one or more paragraphs summarizing the purpose and operation of the Android app you propose to develop in this project.
+This application serves as an essential attendance record, enabling users to perform mathematical computations on user-driven data. This functionality is made possible through Zoom's existing APIs.
 
 ## Intended users & user stories
 {: menu="Users" }
