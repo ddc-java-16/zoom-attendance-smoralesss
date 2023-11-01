@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9b48f4525f39ce748608e5599f3ca7f6",
+    "identityHash": "1492fbff53e35b87d2088497758631b6",
     "entities": [
       {
         "tableName": "user",
@@ -128,7 +128,17 @@
             "zoom_meeting_id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_zoom_meeting_student_id",
+            "unique": false,
+            "columnNames": [
+              "student_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_zoom_meeting_student_id` ON `${TABLE_NAME}` (`student_id`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "student",
@@ -147,7 +157,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9b48f4525f39ce748608e5599f3ca7f6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1492fbff53e35b87d2088497758631b6')"
     ]
   }
 }
