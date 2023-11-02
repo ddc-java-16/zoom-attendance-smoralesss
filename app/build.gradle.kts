@@ -37,9 +37,12 @@ android {
         versionCode = (project.property("versionCode") as String).toInt()
         versionName = project.property("versionName") as String
 
+
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["runnerBuilder"] =
             "de.mannodermaus.junit5.AndroidJUnit5Builder"
+
 
         resValue("string", "app_name", project.property("appName") as String)
         resValue("string", "client_id", getLocalProperty("client_id") ?: "")
@@ -131,6 +134,8 @@ dependencies {
     implementation(libs.hilt.android.core)
     annotationProcessor(libs.hilt.compiler)
 
+    implementation(libs.appauth)
+
     // OkHttp logging dependency
     implementation(libs.logging.interceptor)
 
@@ -188,3 +193,5 @@ fun getProperty(filename: String, name: String): String? {
 fun quoted(input: String): String {
     return "\"$input\""
 }
+
+
