@@ -57,7 +57,20 @@ For example, this starter app already includes the necessary data model elements
 ## Device/external services
 {: menu="Services" }
 
-If the client component will need to access special services of the device (e.g. sensors, contacts, messaging), list them here using a bullet list. Also, if the client component will need to access already-existing external services (e.g. real-time weather data, Open Movie Database, Open Trivia Database), those should also be listed here; any such references to external services should include links to the main page or API description page for the service.
+* Feedback and support platforms
+* Compliance services
+* Privacy and security tools
+* Customization tools
+* User management tools
+* Email services
+* Data storage
+* Google Sign-In API or other user authentication service
+* Zoom API
+* Access to device's 
+  * Microphone
+  * Camera
+  * Notifications
+  * Operating system (Android)
 
 ## Stretch goals and possible enhancements 
 {: menu="Stretch goals" }
