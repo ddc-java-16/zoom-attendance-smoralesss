@@ -16,16 +16,13 @@ This application serves as an essential attendance record, enabling users to per
 
 * A teacher or instructor who needs to keep track of virtual attendance for their students, via Zoom.
 
-    > As a teacher who needs to keep track of virtual attendance for my students via Zoom, I want to have a seamless attendance tracking feature in the application so that I can efficiently monitor and record students' participation, ensuring accurate records for future reference and assessments.
+    > "As a teacher who needs to keep track of virtual attendance for my students via Zoom, I want to have a seamless attendance tracking feature in the application so that I can efficiently monitor and record students' participation, ensuring accurate records for future reference and assessments."
 
 * Someone in a supervisory or managerial position within a company who needs to utilize an attendance tracking software for their business meetings conducted via Zoom.
 
-    > As someone in a supervisory or managerial position within a company, I want to use an attendance tracking software for our business meetings conducted via Zoom so that I can ensure efficient and accountable participation, streamline reporting, and make informed decisions based on attendance data, ultimately improving the effectiveness of our meetings and business operations.
+    > "As someone in a supervisory or managerial position within a company, I want to use an attendance tracking software for our business meetings conducted via Zoom so that I can ensure efficient and accountable participation, streamline reporting, and make informed decisions based on attendance data, ultimately improving the effectiveness of our meetings and business operations."
   
-
 ## Functionality
-
-A Zoom attendance tracking app could offer the following key functional aspects:
 
 * User Authentication: Users can log in securely to access the app, ensuring data privacy.
 * Meeting Integration: The app should seamlessly integrate with Zoom meetings, allowing users to select which meetings to track.
@@ -40,15 +37,14 @@ A Zoom attendance tracking app could offer the following key functional aspects:
 * User-Friendly Interface: Intuitive and user-friendly design for easy navigation and operation.
 * Feedback and Support: Provide a channel for users to seek help and provide feedback.
 
-By offering these features, the app aims to enhance the user experience and streamline the attendance tracking process during Zoom meetings.
-
 ## Persistent data
 {: menu="Persistence" }
 
-Using a bullet list, list what content will be stored on the Android device. This should include any information that users of your app would expect to be maintained (i.e. without connection to a server) across multiple sessions of use.
-
-For example, this starter app already includes the necessary data model elements and data-access code to store & retrieve the following 
-
+* Meeting History: Information about previously tracked Zoom meetings, including meeting names, IDs, timestamps, and attendance records. This allows users to review past meetings without a server connection.
+* Custom Fields: Any custom fields or additional participant information created by the user for specific meetings.
+* User Accounts: User account details, such as usernames, profile pictures, and login tokens for quick access without frequent reauthentication.
+* Cached Meeting Participants: A local cache of participant information (names, email addresses) for recently attended meetings to display attendee details even offline.
+* Reports and Analytics: Generated attendance reports and analytics data for past meetings to allow users to view historical data without an internet connection.
 * User
     * Display name
     * OAuth2.0 identifier
@@ -75,6 +71,7 @@ For example, this starter app already includes the necessary data model elements
 ## Stretch goals and possible enhancements 
 {: menu="Stretch goals" }
 
+* User Preferences: User settings, such as language preferences, notification preferences, and default meeting settings.
 * Analytics: It provides insights into attendance trends and patterns over time.
 * Integration with LMS: If applicable, integration with Learning Management Systems for seamless tracking.
 * Automated Reminders: Optionally, it can send automated reminders to participants to join the meeting.
