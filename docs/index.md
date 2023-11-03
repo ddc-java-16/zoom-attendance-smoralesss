@@ -62,4 +62,8 @@ If the client component will need to access special services of the device (e.g.
 ## Stretch goals and possible enhancements 
 {: menu="Stretch goals" }
 
-
+* Analytics: It provides insights into attendance trends and patterns over time.
+* Integration with LMS: If applicable, integration with Learning Management Systems for seamless tracking.
+* Automated Reminders: Optionally, it can send automated reminders to participants to join the meeting.
+* User Roles: Different user roles (host, co-host, attendee) with varying permissions for data access.
+* Notifications: Notify hosts of late arrivals or early departures.
