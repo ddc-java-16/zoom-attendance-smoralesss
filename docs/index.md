@@ -25,7 +25,22 @@ This application serves as an essential attendance record, enabling users to per
 
 ## Functionality
 
-List (using a bullet list---or ordered list, if order is relevant) the key functional aspects that will be provided by the app---i.e. tell us what the user will be able to do using the app. This should not simply be a re-statement of the [summary](#summary), but should instead provide a more specific articulation of the functionality and user experience. 
+A Zoom attendance tracking app could offer the following key functional aspects:
+
+* User Authentication: Users can log in securely to access the app, ensuring data privacy.
+* Meeting Integration: The app should seamlessly integrate with Zoom meetings, allowing users to select which meetings to track.
+* Attendance Tracking: Users can mark attendance for participants as they join or leave the meeting, with timestamps.
+* Real-time Updates: The app provides real-time updates on attendance, enabling the host to monitor participation.
+* Participant Details: Users can view participant information, including names and email addresses.
+* Custom Fields: It allows users to add custom fields for additional participant information, such as role or ID.
+* Export Data: Users can export attendance data to various formats (CSV, PDF) for record-keeping.
+* Attendance Reports: The app generates detailed reports, summarizing attendance data for each meeting.
+* Search and Filter: Users can search for specific meetings or participants and filter data as needed.
+* Privacy and Compliance: Ensure compliance with data privacy regulations, like GDPR, and secure user data.
+* User-Friendly Interface: Intuitive and user-friendly design for easy navigation and operation.
+* Feedback and Support: Provide a channel for users to seek help and provide feedback.
+
+By offering these features, the app aims to enhance the user experience and streamline the attendance tracking process during Zoom meetings.
 
 ## Persistent data
 {: menu="Persistence" }
@@ -47,4 +62,4 @@ If the client component will need to access special services of the device (e.g.
 ## Stretch goals and possible enhancements 
 {: menu="Stretch goals" }
 
-If you can identify functional elements of the software that you think might not be achievable in the scope of the project, but which would nonetheless add significant value if you were able to include them, list them here. For now, we recommend listing them in order of complexity/amount of work, from the least to the most.
+

@@ -134,7 +134,7 @@ dependencies {
     implementation(libs.hilt.android.core)
     annotationProcessor(libs.hilt.compiler)
 
-    implementation(libs.appauth)
+//    implementation(libs.appauth)
 
     // OkHttp logging dependency
     implementation(libs.logging.interceptor)
