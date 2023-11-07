@@ -21,7 +21,9 @@ public interface StudentDao {
   @Query("SELECT * FROM student WHERE student_id = :id")
   LiveData<Student> select(long id);
 
-  @Query("SELECT * FROM student WHERE student_id LIKE :pattern")
+  @Query("SELECT * FROM student WHERE student_id LIKE :pattern ORDER BY name")
   LiveData<List<Student>> search(String pattern);
 
+  @Query("SELECT * FROM student ORDER BY name")
+  LiveData<List<Student>> get();
 }

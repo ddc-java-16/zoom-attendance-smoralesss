@@ -20,7 +20,7 @@ Note that the pairs of square brackets below are rendered as checkboxes in GitHu
 
 ### Update
 
-* [x] Single instance 
+* [ ] Single instance 
 * [ ] Multiple instances 
 
 ### Delete
