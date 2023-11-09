@@ -65,11 +65,11 @@ Cardinality/modality
 
 Filter
 
-: zoom_meeting_id; student_id; created
+: student_id
 
 Sort order
 
-: ASC; ASC; DESC
+: ASC
 
 ### Query: "GET all zoom meetings"
 
@@ -83,11 +83,11 @@ Cardinality/modality
 
 Filter
 
-: zoom_meeting_id; student_id; created
+: student_id
 
 Sort order
 
-: ASC; ASC; DESC
+: ASC
 
 ### Query: "DELETE a zoom meeting"
 
