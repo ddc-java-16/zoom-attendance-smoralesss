@@ -40,11 +40,13 @@ public class ZoomMeetingRepository {
   }
 
   public LiveData<List<ZoomMeeting>> selectByStudentId(long studentId) {
-    return zoomMeetingDao.select(studentId);
+    return zoomMeetingDao.selectByStudentId(studentId);
   }
 
   public LiveData<List<ZoomMeeting>> get() {
     return zoomMeetingDao.get();
   };
+
+
 
 }
