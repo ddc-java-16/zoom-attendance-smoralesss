@@ -5,9 +5,12 @@ import androidx.room.Relation;
 import edu.cnm.deepdive.zoomattendance.model.entity.Student;
 import edu.cnm.deepdive.zoomattendance.model.entity.ZoomMeeting;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjuster;
@@ -22,16 +25,19 @@ public class AttendanceAggregate {
 
   private static final TemporalAdjuster HOUR_ADJUSTER = (temporal) -> ChronoField.MINUTE_OF_HOUR.adjustInto(ChronoField.SECOND_OF_MINUTE.adjustInto(ChronoField.NANO_OF_SECOND.adjustInto(temporal, 0), 0), 0);
   private static final TemporalAdjuster DAY_ADJUSTER = (temporal) -> ChronoField.HOUR_OF_DAY.adjustInto(temporal.with(HOUR_ADJUSTER), 0);
-  private static final TemporalAdjuster WEEK_ADJUSTER = (temporal) -> ChronoField.DAY_OF_WEEK.adjustInto(temporal.with(DAY_ADJUSTER), 0);
+  private static final TemporalAdjuster WEEK_ADJUSTER = (temporal) -> ChronoField.DAY_OF_WEEK.adjustInto(temporal.with(DAY_ADJUSTER), 1);
+  private static final long SECONDS_PER_HOUR = Duration.ofHours(1).getSeconds();
+  private static final long SECONDS_PER_DAY = Duration.ofDays(1).getSeconds();
+  private static final long SECONDS_PER_WEEK = Duration.ofDays(7).getSeconds();
 
   @Embedded
   private Student student;
   @Relation(parentColumn = "student_id", entityColumn = "student_id")
   private List<ZoomMeeting> zoomMeetings;
 
-  public SortedMap<OffsetDateTime, Long> getAggregates(ChronoUnit unit) {
-    Map<OffsetDateTime, Long> aggregates = new TreeMap<>();
-    Duration duration = Duration.of(1, unit);
+  public SortedMap<LocalDateTime, Long> getAggregates(ChronoUnit unit) {
+    SortedMap<LocalDateTime, Long> aggregates = new TreeMap<>();
+
 
     List<ZoomMeeting> zoomMeetings = getZoomMeetings();
 
@@ -43,32 +49,39 @@ public class AttendanceAggregate {
             case WEEKS -> WEEK_ADJUSTER;
             default -> throw new IllegalArgumentException();
           };
-          int bucketSize = switch (unit) {
-            case HOURS
+          long bucketSize = switch (unit) {
+            case HOURS -> SECONDS_PER_HOUR;
+            case DAYS -> SECONDS_PER_DAY;
+            case WEEKS -> SECONDS_PER_WEEK;
+            default -> 0;
           };
           LocalDateTime baseline = LocalDateTime.ofInstant(meeting.getStarted(), ZoneId.systemDefault()).with(adjuster);
           return IntStream.iterate(0, (value) -> value + 1)
-              .mapToObj(value ->)
+              .mapToObj(value -> baseline.plusSeconds(value * bucketSize))
+              .map((start) -> {
+                Instant startingInstant = start.toInstant(ZoneId.systemDefault().getRules()
+                    .getOffset(start));
+                ZoomMeeting slice = new ZoomMeeting();
+                slice.setStarted(start.toInstant(ZoneId.systemDefault().getRules().getOffset(start)));
+                long duration = (meeting.getStarted().compareTo(startingInstant) > 0)
+                    ? startingInstant.plusSeconds(bucketSize).getEpochSecond() - meeting.getStarted().getEpochSecond()
+                    : bucketSize;
+                if (startingInstant.plusSeconds(bucketSize).compareTo(meeting.getStarted().plusSeconds(meeting.getDuration())) > 0) {
+                  duration -= startingInstant.plusSeconds(bucketSize).getEpochSecond() - meeting.getStarted().plusSeconds(meeting.getDuration()).getEpochSecond();
+                }
+                slice.setDuration(duration);
+                return slice;
+              });
         })
-        .forEach(entry -> {
-          OffsetDateTime start = entry.getKey();
-          OffsetDateTime end = entry.getValue();
+        .forEach(meeting -> {
+          LocalDateTime key = LocalDateTime.ofInstant(meeting.getStarted(), ZoneId.systemDefault());
+          aggregates.put(key, aggregates.getOrDefault(key, 0L) + meeting.getDuration());
 
-          while (start.isBefore(end)) {
-            OffsetDateTime bucketEnd = start.plus(duration);
-
-            aggregates.put(start, aggregates.getOrDefault(start, 0L) + 1);
-
-            start = bucketEnd;
-          }
         });
+    return aggregates;
 
-    return new TreeMap<>(aggregates);
-    // TODO: 11/13/23
-    //  -Create a stream of zoomMeeting using our zoomMeetings List as a source of the stream
-    //  -Map each of the zoomMeeting into an array of start & end instant
-    //  -For each aggregation, split it accordingly into time buckets
-    //  -Return the map
+//    return new TreeMap<>(aggregates);
+
   }
 
   public Student getStudent() {
