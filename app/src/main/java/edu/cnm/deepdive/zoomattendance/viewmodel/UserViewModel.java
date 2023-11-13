@@ -27,6 +27,7 @@ import androidx.lifecycle.ViewModel;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import edu.cnm.deepdive.zoomattendance.model.entity.User;
+import edu.cnm.deepdive.zoomattendance.service.StudentRepository;
 import edu.cnm.deepdive.zoomattendance.service.UserRepository;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import java.util.List;
@@ -49,6 +50,8 @@ public class UserViewModel extends ViewModel implements DefaultLifecycleObserver
   private final LiveData<User> user;
   private final MutableLiveData<Throwable> throwable;
   private final CompositeDisposable pending;
+
+  private StudentRepository studentRepository;
 
   @Inject
   UserViewModel(@ApplicationContext Context context, UserRepository repository) {
@@ -167,5 +170,8 @@ public class UserViewModel extends ViewModel implements DefaultLifecycleObserver
     Log.e(getClass().getSimpleName(), throwable.getMessage(), throwable);
     this.throwable.postValue(throwable);
   }
+
+
+
 
 }
