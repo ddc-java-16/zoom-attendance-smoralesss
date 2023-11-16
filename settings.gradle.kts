@@ -30,4 +30,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "zoom-attendance"
-include(":app")
+include(":app", ":commonlib")

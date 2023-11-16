@@ -5,6 +5,8 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RewriteQueriesToDropUnusedColumns;
+import androidx.room.Transaction;
 import edu.cnm.deepdive.zoomattendance.model.AttendanceAggregate;
 import edu.cnm.deepdive.zoomattendance.model.entity.Student;
 import io.reactivex.rxjava3.core.Single;
@@ -29,6 +31,7 @@ public interface StudentDao {
   @Query("SELECT * FROM student ORDER BY name")
   LiveData<List<Student>> get();
 
+  @Transaction
   @Query("SELECT DISTINCT * FROM student AS s JOIN zoom_meeting AS z ON z.student_id = s.student_id WHERE s.student_id = :studentId AND z.started <= :end AND z.started + z.duration >= :start ORDER BY z.started ASC")
   LiveData<List<AttendanceAggregate>> getAggregate(long studentId, Instant start, Instant end);
 

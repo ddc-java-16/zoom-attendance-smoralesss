@@ -86,6 +86,7 @@ android {
 dependencies {
 
     // .jar-based libraries included in project
+    implementation(project(":commonlib"))
 
     // Basic Android components
     implementation(libs.app.compat)
@@ -139,8 +140,6 @@ dependencies {
     // OkHttp logging dependency
     implementation(libs.logging.interceptor)
 
-    // Stetho (inspection) dependency
-    implementation(libs.stetho)
 
     // Libraries for JVM-based testing.
     testImplementation(libs.junit.api)
