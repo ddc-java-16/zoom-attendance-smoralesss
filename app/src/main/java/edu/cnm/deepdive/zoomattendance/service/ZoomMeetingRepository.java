@@ -6,6 +6,7 @@ import edu.cnm.deepdive.zoomattendance.model.entity.ZoomMeeting;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import java.util.LinkedList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -47,6 +48,11 @@ public class ZoomMeetingRepository {
     return zoomMeetingDao.get();
   };
 
+  public Single<? extends List<ZoomMeeting>> list(String userId) {
+    return Single.just(new LinkedList<ZoomMeeting>(/* TODO Invoke proxy method to construct a request for a meeting list */))
+        .map((meetings) -> meetings /* TODO Store return meetings in database  */)
+        .subscribeOn(Schedulers.io());
+  }
 
 
 }
