@@ -1,10 +1,12 @@
 package edu.cnm.deepdive.zoomattendance.service;
 
+import edu.cnm.deepdive.zoomattendance.model.dto.Authentication;
 import edu.cnm.deepdive.zoomattendance.model.dto.MeetingListResponse;
 import edu.cnm.deepdive.zoomattendance.model.dto.MeetingParticipantsResponse;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -16,5 +18,10 @@ public interface ZoomApiProxy {
   @GET("past_meetings/{meetingId}/participants")
   Single<MeetingParticipantsResponse> listParticipants(@Header("Authorization") String bearerToken, @Path("meetingId")String meetingId, @Query("next_page_token") String nextPageToken);
 
+  @POST("oauth/token")
+  Single<Authentication> authenticate(@Header("Authorization") String authorization, String accountId);
 
 }
+
+
+
