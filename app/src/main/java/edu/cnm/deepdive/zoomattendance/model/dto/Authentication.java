@@ -1,8 +1,11 @@
 package edu.cnm.deepdive.zoomattendance.model.dto;
 
+import android.annotation.SuppressLint;
+import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
+
 
 public class Authentication {
 
@@ -41,5 +44,18 @@ public class Authentication {
 
   public String getScope() {
     return scope;
+  }
+
+  public Date expiration() {
+    //noinspection PointlessArithmeticExpression
+    return new Date(created.getTime() + duration * 1000);
+  }
+
+  @SuppressLint("DefaultLocale")
+  @NonNull
+  @Override
+  public String toString() {
+    return String.format("%1$s[token=%2$s, tokentype=%3$s, scope=%4$s, created=%5$s, duration=%6$d]", getClass().getSimpleName(), token, tokenType, scope, created, duration);
+
   }
 }

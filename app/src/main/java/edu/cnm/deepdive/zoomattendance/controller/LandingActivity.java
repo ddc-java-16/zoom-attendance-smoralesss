@@ -4,9 +4,14 @@ import android.content.Intent;
 import android.net.Uri;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.lifecycle.ViewModelProvider;
+import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.zoomattendance.R;
 import edu.cnm.deepdive.zoomattendance.service.CodeChallengeHelper;
+import edu.cnm.deepdive.zoomattendance.service.ZoomMeetingRepository;
+import edu.cnm.deepdive.zoomattendance.viewmodel.ZoomMeetingViewModel;
 
+@AndroidEntryPoint
 public class LandingActivity extends AppCompatActivity {
 
   private static final String ZOOM_OAUTH_URI = "https://zoom.us/oauth/authorize";
@@ -14,7 +19,10 @@ public class LandingActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_landing);
-    openLogin();
+//    openLogin();
+    ZoomMeetingViewModel viewModel = new ViewModelProvider(this)
+        .get(ZoomMeetingViewModel.class);
+
   }
 
   private void openLogin() {

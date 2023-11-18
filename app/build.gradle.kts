@@ -46,6 +46,8 @@ android {
 
         resValue("string", "app_name", project.property("appName") as String)
         resValue("string", "client_id", getLocalProperty("client_id") ?: "")
+        resValue("string", "client_secret", getLocalProperty("client_secret") ?: "")
+        resValue("string", "account_id", getLocalProperty("account_id") ?: "")
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -128,8 +130,6 @@ dependencies {
     implementation(libs.retrofit.converter.gson)
     implementation(libs.retrofit.adapter.rx.java)
 
-    // Picasso image retrieval library
-    implementation(libs.picasso)
 
     // Hilt dependency-injection library & annotation processor
     implementation(libs.hilt.android.core)
