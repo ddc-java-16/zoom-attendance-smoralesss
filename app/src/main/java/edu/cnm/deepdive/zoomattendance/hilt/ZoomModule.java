@@ -9,6 +9,7 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import edu.cnm.deepdive.zoomattendance.service.ZoomApiProxy;
+import edu.cnm.deepdive.zoomattendance.service.ZoomAuthProxy;
 import javax.inject.Singleton;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -23,7 +24,26 @@ public final class ZoomModule {
 
   @Singleton
   @Provides
-  ZoomApiProxy buildProxy(@ApplicationContext Context context) {
+  ZoomAuthProxy buildAuthProxy(@ApplicationContext Context context) {
+    Gson gson = new GsonBuilder()
+        .excludeFieldsWithoutExposeAnnotation()
+        .create();
+    HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor().setLevel(Level.BODY);
+    OkHttpClient client = new OkHttpClient.Builder()
+        .addInterceptor(interceptor)
+        .build();
+    Retrofit retrofit = new Retrofit.Builder()
+        .baseUrl("https://zoom.us/")
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+        .client(client)
+        .build();
+    return retrofit.create(ZoomAuthProxy.class);
+  }
+
+  @Singleton
+  @Provides
+  ZoomApiProxy buildApiProxy(@ApplicationContext Context context) {
     Gson gson = new GsonBuilder()
         .excludeFieldsWithoutExposeAnnotation()
         .setDateFormat("yyyy-MM-dd")
@@ -33,7 +53,7 @@ public final class ZoomModule {
         .addInterceptor(interceptor)
         .build();
     Retrofit retrofit = new Retrofit.Builder()
-        .baseUrl("https://zoom.us/")
+        .baseUrl("https://api.zoom.us/v2/")
         .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .client(client)

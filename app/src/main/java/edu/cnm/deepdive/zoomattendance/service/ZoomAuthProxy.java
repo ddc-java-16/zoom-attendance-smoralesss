@@ -13,15 +13,14 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface ZoomApiProxy {
+public interface ZoomAuthProxy {
 
 
-  @GET("users/me/meetings")
-  Single<MeetingListResponse> listMeetings(@Header("Authorization") String bearerToken, @Query("next_page_token") String nextPageToken, @Query("from") String from, @Query("to") String to, @Query("page_size") int pageSize);
 
-  @GET("past_meetings/{meetingId}/participants")
-  Single<MeetingParticipantsResponse> listParticipants(@Header("Authorization") String bearerToken, @Path("meetingId")String meetingId, @Query("next_page_token") String nextPageToken);
-
+  @FormUrlEncoded
+  @POST("oauth/token")
+  @Headers("Content-Type: application/x-www-form-urlencoded")
+  Single<Authentication> authenticate(@Header("Authorization") String authorization, @Field("account_id") String accountId, @Field("grant_type") String grantType);
 
 }
 

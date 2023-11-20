@@ -10,7 +10,7 @@ public class Meeting {
   @Expose
   private final long id = 0;
   @Expose
-  private final UUID uuid = null;
+  private final String uuid = null;
   @Expose
   @SerializedName("start_time")
   private final Date start = null;
@@ -21,7 +21,7 @@ public class Meeting {
     return id;
   }
 
-  public UUID getUuid() {
+  public String getUuid() {
     return uuid;
   }
 

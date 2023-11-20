@@ -12,6 +12,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext;
 import edu.cnm.deepdive.zoomattendance.model.entity.ZoomMeeting;
 import edu.cnm.deepdive.zoomattendance.service.ZoomMeetingRepository;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import java.util.Date;
 import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,13 +32,24 @@ public class ZoomMeetingViewModel extends ViewModel implements DefaultLifecycleO
     this.zoomMeeting = new MutableLiveData<>();
     this.throwable = new MutableLiveData<>();
     this.pending = new CompositeDisposable();
-    connect();
+//    connect();
+    fetchMeetings();
   }
 
   private void connect() {
     repository.authenticate()
         .subscribe(
             (auth) -> Log.d(getClass().getSimpleName(), auth.toString()),
+            this::postThrowable,
+            pending
+        );
+  }
+
+  public void fetchMeetings() {
+    repository.fetchMeetings(new Date(0), new Date())
+        .subscribe(
+            (meetings) ->
+                Log.d(getClass().getSimpleName(), String.valueOf(meetings.size())),
             this::postThrowable,
             pending
         );
