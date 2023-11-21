@@ -2,10 +2,12 @@ package edu.cnm.deepdive.zoomattendance.model.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(
-    tableName = "student"
+    tableName = "student",
+    indices = @Index(value = "name", unique = true)
 )
 public class Student {
 

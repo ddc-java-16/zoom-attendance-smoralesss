@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import java.time.Instant;
 
@@ -14,6 +15,9 @@ import java.time.Instant;
             entity = Student.class,
             parentColumns = "student_id", childColumns = "student_id", onDelete = ForeignKey.CASCADE
         )
+    },
+    indices = {
+        @Index(value = {"uuid", "student_id"}, unique = true)
     }
 )
 public class ZoomMeeting {
@@ -22,6 +26,8 @@ public class ZoomMeeting {
   @ColumnInfo(name = "zoom_meeting_id")
   private long id;
 
+  @ColumnInfo(index = true)
+  private String uuid;
 
   @ColumnInfo(name = "student_id", index = true)
   private long studentId;
@@ -40,6 +46,14 @@ public class ZoomMeeting {
 
   public void setStudentId(long studentId) {
     this.studentId = studentId;
+  }
+
+  public String getUuid() {
+    return uuid;
+  }
+
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
   }
 
   public long getId() {

@@ -2,14 +2,18 @@ package edu.cnm.deepdive.zoomattendance.service;
 
 import android.content.Context;
 import android.util.Base64;
+import android.util.Log;
 import androidx.lifecycle.LiveData;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import edu.cnm.deepdive.zoomattendance.R;
+import edu.cnm.deepdive.zoomattendance.model.dao.StudentDao;
 import edu.cnm.deepdive.zoomattendance.model.dao.ZoomMeetingDao;
 import edu.cnm.deepdive.zoomattendance.model.dto.Authentication;
 import edu.cnm.deepdive.zoomattendance.model.dto.Meeting;
 import edu.cnm.deepdive.zoomattendance.model.dto.MeetingListResponse;
 import edu.cnm.deepdive.zoomattendance.model.dto.MeetingParticipantsResponse;
+import edu.cnm.deepdive.zoomattendance.model.dto.Participant;
+import edu.cnm.deepdive.zoomattendance.model.entity.Student;
 import edu.cnm.deepdive.zoomattendance.model.entity.ZoomMeeting;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
@@ -18,6 +22,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,6 +36,7 @@ public class ZoomMeetingRepository {
   private static final int PAGE_SIZE = 300;
 
   private final ZoomMeetingDao zoomMeetingDao;
+  private final StudentDao studentDao;
   private final ZoomAuthProxy authProxy;
   private final ZoomApiProxy apiProxy;
   private final String accountId;
@@ -42,8 +48,9 @@ public class ZoomMeetingRepository {
 
   @Inject
   public ZoomMeetingRepository(@ApplicationContext Context context, ZoomMeetingDao zoomMeetingDao,
-      ZoomAuthProxy authProxy, ZoomApiProxy apiProxy) {
+      StudentDao studentDao, ZoomAuthProxy authProxy, ZoomApiProxy apiProxy) {
     this.zoomMeetingDao = zoomMeetingDao;
+    this.studentDao = studentDao;
     this.authProxy = authProxy;
     this.apiProxy = apiProxy;
     accountId = context.getString(R.string.account_id);
@@ -117,11 +124,57 @@ public class ZoomMeetingRepository {
   public Completable observeMeetings(Date from, Date to) {
     return fetchMeetings(from, to)
         .flatMapObservable(Observable::fromIterable)
-        .flatMap(meeting -> apiProxy.listParticipants("Bearer " + authentication.getToken(), meeting.getUuid(), "")
+        .doOnNext((meeting) -> Log.d(getClass().getSimpleName(), meeting.toString()))
+        .flatMap(meeting -> apiProxy.listParticipants("Bearer " + authentication.getToken(),
+                meeting.getUuid(), "")
             .map(MeetingParticipantsResponse::getParticipants)
             .flatMapObservable(Observable::fromIterable)
-            .doOnNext((participant) -> { /* TODO Take the meeting & the participant and store them in the database (as instances of ZoomMeeting class and Student class */ }))
+            .doOnNext((participant) -> Log.d(getClass().getSimpleName(), participant.toString()))
+            .flatMap((participant) ->
+                addOrRetrieve(participant)
+                    .flatMap((student) -> zoomMeetingDao
+                        .selectByStudentAndUUID(student.getId(), meeting.getUuid())
+                        .switchIfEmpty(
+                            Single.fromSupplier(() -> {
+                              ZoomMeeting zoomMeeting = new ZoomMeeting();
+                              zoomMeeting.setStudentId(student.getId());
+                              zoomMeeting.setUuid(meeting.getUuid());
+                              zoomMeeting.setStarted(Instant.ofEpochMilli(meeting.getStart().getTime()));
+                              zoomMeeting.setDuration(participant.getDuration());
+                              return zoomMeeting;
+                            })
+                                .flatMap((zoomMeeting) -> zoomMeetingDao
+                                    .insert(zoomMeeting)
+                                    .map((id) -> {
+                                      zoomMeeting.setId(id);
+                                      return zoomMeeting;
+                                    })
+                                )
+                        )
+                    )
+                    .toObservable()
+            )
+        )
         .ignoreElements();
   }
 
+  private Single<Student> addOrRetrieve(Participant participant) {
+    return
+        studentDao
+            .selectByName(participant.getName())
+            .switchIfEmpty(
+                Single.fromSupplier(() -> {
+                      Student student = new Student();
+                      student.setName(participant.getName());
+                      return student;
+                    })
+                    .flatMap(
+                        (student) -> studentDao.insert(student)
+                            .map((id) -> {
+                              student.setId(id);
+                              return student;
+                            })
+                    )
+            );
+  }
 }

@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 import edu.cnm.deepdive.zoomattendance.model.entity.ZoomMeeting;
+import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
 import java.util.List;
 
@@ -30,5 +31,7 @@ public interface ZoomMeetingDao {
   @Query("SELECT * FROM zoom_meeting ORDER BY student_id")
   LiveData<List<ZoomMeeting>> get();
 
+  @Query("SELECT * FROM zoom_meeting WHERE student_id = :studentId AND uuid = :uuid")
+  Maybe<ZoomMeeting> selectByStudentAndUUID(long studentId, String uuid);
 
 }

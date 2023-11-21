@@ -4,11 +4,13 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.RewriteQueriesToDropUnusedColumns;
 import androidx.room.Transaction;
 import edu.cnm.deepdive.zoomattendance.model.AttendanceAggregate;
 import edu.cnm.deepdive.zoomattendance.model.entity.Student;
+import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
 import java.time.Instant;
 import java.util.List;
@@ -25,7 +27,10 @@ public interface StudentDao {
   @Query("SELECT * FROM student WHERE student_id = :id")
   LiveData<Student> select(long id);
 
-  @Query("SELECT * FROM student WHERE student_id LIKE :pattern ORDER BY name")
+  @Query("SELECT * FROM student WHERE name = :name")
+  Maybe<Student> selectByName(String name);
+
+  @Query("SELECT * FROM student WHERE name LIKE :pattern ORDER BY name")
   LiveData<List<Student>> search(String pattern);
 
   @Query("SELECT * FROM student ORDER BY name")

@@ -46,10 +46,10 @@ public class ZoomMeetingViewModel extends ViewModel implements DefaultLifecycleO
   }
 
   public void fetchMeetings() {
-    repository.fetchMeetings(new Date(0), new Date())
+    repository.observeMeetings(new Date(0), new Date())
         .subscribe(
-            (meetings) ->
-                Log.d(getClass().getSimpleName(), String.valueOf(meetings.size())),
+            () ->
+                Log.d(getClass().getSimpleName(),"Meetings Recorded"),
             this::postThrowable,
             pending
         );
