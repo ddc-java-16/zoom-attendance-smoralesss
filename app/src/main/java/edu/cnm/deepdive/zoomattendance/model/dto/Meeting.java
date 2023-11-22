@@ -12,10 +12,15 @@ public class Meeting {
   @Expose
   private final String uuid = null;
   @Expose
+  @SerializedName("created_at")
+  private final Date created = null;
+  @Expose
   @SerializedName("start_time")
   private final Date start = null;
   @Expose
   private final int duration = 0;
+  @Expose
+  private final String topic = null;
 
   public long getId() {
     return id;
@@ -25,11 +30,19 @@ public class Meeting {
     return uuid;
   }
 
+  public Date getCreated() {
+    return created;
+  }
+
   public Date getStart() {
     return start;
   }
 
   public int getDuration() {
     return duration;
+  }
+
+  public String getTopic() {
+    return topic;
   }
 }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1492fbff53e35b87d2088497758631b6",
+    "identityHash": "275510e253fcba0b96d1209d6c47311a",
     "entities": [
       {
         "tableName": "user",
@@ -84,12 +84,22 @@
             "student_id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_student_name",
+            "unique": true,
+            "columnNames": [
+              "name"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_student_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
         "tableName": "zoom_meeting",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`zoom_meeting_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `student_id` INTEGER NOT NULL, `created` INTEGER NOT NULL, `started` INTEGER NOT NULL, `duration` INTEGER NOT NULL, FOREIGN KEY(`student_id`) REFERENCES `student`(`student_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`zoom_meeting_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uuid` TEXT, `student_id` INTEGER, `created` INTEGER NOT NULL, `started` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `topic` TEXT, FOREIGN KEY(`student_id`) REFERENCES `student`(`student_id`) ON UPDATE NO ACTION ON DELETE SET NULL )",
         "fields": [
           {
             "fieldPath": "id",
@@ -98,10 +108,16 @@
             "notNull": true
           },
           {
+            "fieldPath": "uuid",
+            "columnName": "uuid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "studentId",
             "columnName": "student_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "created",
@@ -120,6 +136,12 @@
             "columnName": "duration",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "topic",
+            "columnName": "topic",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -129,6 +151,35 @@
           ]
         },
         "indices": [
+          {
+            "name": "index_zoom_meeting_uuid_student_id",
+            "unique": true,
+            "columnNames": [
+              "uuid",
+              "student_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_zoom_meeting_uuid_student_id` ON `${TABLE_NAME}` (`uuid`, `student_id`)"
+          },
+          {
+            "name": "index_zoom_meeting_uuid_created",
+            "unique": true,
+            "columnNames": [
+              "uuid",
+              "created"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_zoom_meeting_uuid_created` ON `${TABLE_NAME}` (`uuid`, `created`)"
+          },
+          {
+            "name": "index_zoom_meeting_uuid",
+            "unique": false,
+            "columnNames": [
+              "uuid"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_zoom_meeting_uuid` ON `${TABLE_NAME}` (`uuid`)"
+          },
           {
             "name": "index_zoom_meeting_student_id",
             "unique": false,
@@ -142,7 +193,7 @@
         "foreignKeys": [
           {
             "table": "student",
-            "onDelete": "CASCADE",
+            "onDelete": "SET NULL",
             "onUpdate": "NO ACTION",
             "columns": [
               "student_id"
@@ -157,7 +208,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1492fbff53e35b87d2088497758631b6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '275510e253fcba0b96d1209d6c47311a')"
     ]
   }
 }

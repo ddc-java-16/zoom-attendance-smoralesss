@@ -13,12 +13,14 @@ import edu.cnm.deepdive.zoomattendance.model.entity.ZoomMeeting;
 import edu.cnm.deepdive.zoomattendance.service.ZoomMeetingRepository;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import java.util.Date;
+import java.util.List;
 import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 
 @HiltViewModel
 public class ZoomMeetingViewModel extends ViewModel implements DefaultLifecycleObserver {
 
+  private static final long MILLISECONDS_PER_MONTH = 30L * 24 * 60 * 60 * 1000;
   private final ZoomMeetingRepository repository;
   private final MutableLiveData<Long> zoomMeetingId;
   private final LiveData<ZoomMeeting> zoomMeeting;
@@ -34,6 +36,7 @@ public class ZoomMeetingViewModel extends ViewModel implements DefaultLifecycleO
     this.pending = new CompositeDisposable();
 //    connect();
     fetchMeetings();
+//    fetchDetails(821_3179_6284L);
   }
 
   private void connect() {
@@ -46,16 +49,23 @@ public class ZoomMeetingViewModel extends ViewModel implements DefaultLifecycleO
   }
 
   public void fetchMeetings() {
-    repository.observeMeetings(new Date(0), new Date())
+    Date to = new Date();
+    Date from = new Date(to.getTime() - MILLISECONDS_PER_MONTH);
+    repository.observeMeetings(from, to)
         .subscribe(
             () ->
-                Log.d(getClass().getSimpleName(),"Meetings Recorded"),
+                Log.d(getClass().getSimpleName(), "Meetings Recorded"),
             this::postThrowable,
             pending
         );
   }
 
-  public MutableLiveData<Long> getZoomMeetingId() {
+  public void fetchDetails(long meetingId) {
+    repository.fetchMeeting(meetingId)
+        .subscribe();
+  }
+
+  public LiveData<Long> getZoomMeetingId() {
     return zoomMeetingId;
   }
 
@@ -63,7 +73,11 @@ public class ZoomMeetingViewModel extends ViewModel implements DefaultLifecycleO
     return zoomMeeting;
   }
 
-  public MutableLiveData<Throwable> getThrowable() {
+  public LiveData<List<ZoomMeeting>> getZoomMeetings() {
+    return repository.get();
+  }
+
+  public LiveData<Throwable> getThrowable() {
     return throwable;
   }
 
@@ -73,7 +87,7 @@ public class ZoomMeetingViewModel extends ViewModel implements DefaultLifecycleO
     pending.clear();
   }
 
-  private void postThrowable (Throwable throwable) {
+  private void postThrowable(Throwable throwable) {
     Log.e(getClass().getSimpleName(), throwable.getMessage(), throwable);
   }
 }

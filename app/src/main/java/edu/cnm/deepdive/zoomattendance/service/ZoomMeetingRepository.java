@@ -10,9 +10,12 @@ import edu.cnm.deepdive.zoomattendance.model.dao.StudentDao;
 import edu.cnm.deepdive.zoomattendance.model.dao.ZoomMeetingDao;
 import edu.cnm.deepdive.zoomattendance.model.dto.Authentication;
 import edu.cnm.deepdive.zoomattendance.model.dto.Meeting;
+import edu.cnm.deepdive.zoomattendance.model.dto.MeetingDetailsResponse;
 import edu.cnm.deepdive.zoomattendance.model.dto.MeetingListResponse;
 import edu.cnm.deepdive.zoomattendance.model.dto.MeetingParticipantsResponse;
 import edu.cnm.deepdive.zoomattendance.model.dto.Participant;
+import edu.cnm.deepdive.zoomattendance.model.dto.UserListResponse;
+import edu.cnm.deepdive.zoomattendance.model.dto.UserResponse;
 import edu.cnm.deepdive.zoomattendance.model.entity.Student;
 import edu.cnm.deepdive.zoomattendance.model.entity.ZoomMeeting;
 import io.reactivex.rxjava3.core.Completable;
@@ -26,6 +29,7 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -45,6 +49,7 @@ public class ZoomMeetingRepository {
   private final DateFormat dateFormat;
 
   private Authentication authentication;
+  private UserResponse userResponse;
 
   @Inject
   public ZoomMeetingRepository(@ApplicationContext Context context, ZoomMeetingDao zoomMeetingDao,
@@ -63,6 +68,14 @@ public class ZoomMeetingRepository {
     byte[] bytes = (clientId + ':' + clientSecret).getBytes(StandardCharsets.UTF_8);
     String authorization = Base64.encodeToString(bytes, Base64.NO_WRAP);
     return authProxy.authenticate("Basic " + authorization, accountId, "account_credentials")
+        .flatMap((auth) -> apiProxy
+            .listUsers("Bearer " + auth.getToken(), "", PAGE_SIZE)
+            .map(userListResponse -> {
+              userResponse = userListResponse.getUsers()
+                  .get(0);// FIXME Don't assume first user is the one we want.
+              return auth;
+            })
+        )
         .subscribeOn(Schedulers.io())
         .doOnSuccess(auth -> authentication = auth);
 
@@ -116,12 +129,30 @@ public class ZoomMeetingRepository {
 
   public Single<List<Meeting>> fetchMeetings(Date from, Date to) {
     return refresh()
-        .flatMap(token -> apiProxy.listMeetings(token, "", dateFormat.format(from),
-            dateFormat.format(to), PAGE_SIZE))
+        .flatMap(
+            token -> apiProxy.listMeetings(token, userResponse.getId(), "", dateFormat.format(from),
+                dateFormat.format(to), PAGE_SIZE, "scheduled"))
         .map(MeetingListResponse::getMeetings);
   }
 
   public Completable observeMeetings(Date from, Date to) {
+    return fetchMeetings(from, to)
+        .flatMapObservable(Observable::fromIterable)
+        .map((meeting) -> {
+          ZoomMeeting zoomMeeting = new ZoomMeeting();
+          zoomMeeting.setCreated(Instant.ofEpochMilli(meeting.getCreated().getTime()));
+          zoomMeeting.setStarted(Instant.ofEpochMilli(meeting.getStart().getTime()));
+          zoomMeeting.setUuid(meeting.getUuid());
+          zoomMeeting.setDuration(meeting.getDuration() * 60);
+          zoomMeeting.setTopic(meeting.getTopic());
+          return zoomMeeting;
+        })
+        .collect(Collectors.toList())
+        .flatMap(zoomMeetingDao::insert)
+        .ignoreElement();
+  }
+
+  public Completable observeMeetingsAndParticipants(Date from, Date to) {
     return fetchMeetings(from, to)
         .flatMapObservable(Observable::fromIterable)
         .doOnNext((meeting) -> Log.d(getClass().getSimpleName(), meeting.toString()))
@@ -129,20 +160,22 @@ public class ZoomMeetingRepository {
                 meeting.getUuid(), "")
             .map(MeetingParticipantsResponse::getParticipants)
             .flatMapObservable(Observable::fromIterable)
-            .doOnNext((participant) -> Log.d(getClass().getSimpleName(), participant.toString()))
+            .doOnNext((participant) ->
+                Log.d(getClass().getSimpleName(), participant.toString()))
             .flatMap((participant) ->
                 addOrRetrieve(participant)
                     .flatMap((student) -> zoomMeetingDao
                         .selectByStudentAndUUID(student.getId(), meeting.getUuid())
                         .switchIfEmpty(
                             Single.fromSupplier(() -> {
-                              ZoomMeeting zoomMeeting = new ZoomMeeting();
-                              zoomMeeting.setStudentId(student.getId());
-                              zoomMeeting.setUuid(meeting.getUuid());
-                              zoomMeeting.setStarted(Instant.ofEpochMilli(meeting.getStart().getTime()));
-                              zoomMeeting.setDuration(participant.getDuration());
-                              return zoomMeeting;
-                            })
+                                  ZoomMeeting zoomMeeting = new ZoomMeeting();
+                                  zoomMeeting.setStudentId(student.getId());
+                                  zoomMeeting.setUuid(meeting.getUuid());
+                                  zoomMeeting.setStarted(
+                                      Instant.ofEpochMilli(meeting.getStart().getTime()));
+                                  zoomMeeting.setDuration(participant.getDuration());
+                                  return zoomMeeting;
+                                })
                                 .flatMap((zoomMeeting) -> zoomMeetingDao
                                     .insert(zoomMeeting)
                                     .map((id) -> {
@@ -176,5 +209,10 @@ public class ZoomMeetingRepository {
                             })
                     )
             );
+  }
+
+  public Single<MeetingDetailsResponse> fetchMeeting(long meetingId) {
+    return refresh()
+        .flatMap((token) -> apiProxy.getDetails(token, meetingId));
   }
 }

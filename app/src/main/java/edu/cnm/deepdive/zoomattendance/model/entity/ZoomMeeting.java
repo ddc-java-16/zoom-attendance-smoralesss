@@ -13,11 +13,12 @@ import java.time.Instant;
     foreignKeys = {
         @ForeignKey(
             entity = Student.class,
-            parentColumns = "student_id", childColumns = "student_id", onDelete = ForeignKey.CASCADE
+            parentColumns = "student_id", childColumns = "student_id", onDelete = ForeignKey.SET_NULL
         )
     },
     indices = {
-        @Index(value = {"uuid", "student_id"}, unique = true)
+        @Index(value = {"uuid", "student_id"}, unique = true),
+        @Index(value = {"uuid", "created"}, unique = true)
     }
 )
 public class ZoomMeeting {
@@ -30,7 +31,7 @@ public class ZoomMeeting {
   private String uuid;
 
   @ColumnInfo(name = "student_id", index = true)
-  private long studentId;
+  private Long studentId;
 
   @NonNull
   private Instant created = Instant.MIN;
@@ -40,11 +41,13 @@ public class ZoomMeeting {
 
   private long duration;
 
-  public long getStudentId() {
+  private String topic;
+
+  public Long getStudentId() {
     return studentId;
   }
 
-  public void setStudentId(long studentId) {
+  public void setStudentId(Long studentId) {
     this.studentId = studentId;
   }
 
@@ -90,5 +93,11 @@ public class ZoomMeeting {
     this.duration = duration;
   }
 
+  public String getTopic() {
+    return topic;
+  }
 
+  public void setTopic(String topic) {
+    this.topic = topic;
+  }
 }
