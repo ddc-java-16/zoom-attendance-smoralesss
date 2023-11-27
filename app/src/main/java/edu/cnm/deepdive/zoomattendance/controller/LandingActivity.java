@@ -2,6 +2,9 @@ package edu.cnm.deepdive.zoomattendance.controller;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.view.Menu;
+import android.view.MenuItem;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,6 +34,28 @@ public class LandingActivity extends AppCompatActivity {
     viewModel.getZoomMeetings()
         .observe(this,
             (meetings) -> binding.meetings.setAdapter(new MeetingAdapter(this, meetings)));
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    super.onCreateOptionsMenu(menu);
+    getMenuInflater().inflate(R.menu.main_options, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    boolean handled = true;
+    int itemId = item.getItemId();
+    if (itemId == R.id.refresh) {
+      viewModel.fetchMeetings();
+    } else if (itemId == R.id.settings) {
+      Intent intent = new Intent(this, SettingsActivity.class);
+      startActivity(intent);
+    } else {
+      handled = super.onOptionsItemSelected(item);
+    }
+    return handled;
   }
 
   private void openLogin() {

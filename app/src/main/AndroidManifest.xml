@@ -23,16 +23,10 @@
       </intent-filter>
     </activity>
     <activity
-      android:name=".controller.MainActivity"
-      android:exported="true">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
+      android:name=".controller.SettingsActivity"
+     android:parentActivityName=".controller.LandingActivity"
+      >
 
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
-
-        <data android:scheme="edu.cnm.deepdive.zoomattendance"/>
-      </intent-filter>
     </activity>
   </application>
 

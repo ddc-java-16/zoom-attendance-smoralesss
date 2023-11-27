@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <integer name="min_day_query">7</integer>
+  <integer name="max_day_query">30</integer>
+  <integer name="default_day_query">7</integer>
+</resources>

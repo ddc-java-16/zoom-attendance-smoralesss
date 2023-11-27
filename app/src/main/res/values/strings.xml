@@ -39,5 +39,8 @@
   <string name="selectable_text_pref_summary_off">Uneditable text is not selectable.</string>
   <string name="meeting_number">Meeting Number</string>
   <string name="meeting_password">Meeting password</string>
+  <string name="query_day_key">query_day</string>
+  <string name="query_day_title">Number of days of Zoom Meetings</string>
+  <string name="refresh">Refresh</string>
 
 </resources>

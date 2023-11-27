@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <SeekBarPreference
+    android:key="@string/query_day_key"
+    app:min="@integer/min_day_query"
+    android:max="@integer/max_day_query"
+    android:defaultValue="@integer/default_day_query"
+    android:title="@string/query_day_title"
+    app:showSeekBarValue="true"
+    />
+
+</PreferenceScreen>

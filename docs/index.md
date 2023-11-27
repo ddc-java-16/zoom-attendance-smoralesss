@@ -11,9 +11,9 @@ order: 0
 
 This application serves as an essential attendance record tracking application. It, enables users to perform computations on user-driven data. This functionality is made possible through Zoom's existing APIs.
 
-I developed this application because I saw an obvious need for it. Any educator or business leader utilizing Zoom for remote learning stands to gain from its integrated attendance tracking features. It exemplifies how technology can simplify your life; wondering, "What on Earth would I do with it?".
+I developed this application because I saw an obvious need for it. Any educator or business leader utilizing Zoom for remote learning stands to gain from its integrated attendance tracking features. It exemplifies how technology can simplify your life.
 
-Once you are logged into the app, you are able to 
+Once you are logged into the app, it populates your meeting history of previously attended Zoom meetings. This is thanks to the services provided by the Zoom API and faculties such as the user id. Due to unforeseen complications with the Zoom API, a list of participants is not available and in use within the scope of this project. 
 
 ## Intended users & user stories
 {: menu="Users" }
