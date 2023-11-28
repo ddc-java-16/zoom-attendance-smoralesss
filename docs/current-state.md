@@ -29,3 +29,5 @@ Things needed for ideal completion of app include:
 
 ## Test environments used
 {: menu="Environments" }
+
+* This was developed using a Pixel 7 API 33 emulator for testing purposes.
