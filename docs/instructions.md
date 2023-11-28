@@ -10,7 +10,7 @@ order: 30
 ## Build instructions
 {: menu="Build" }
 
-* Create an account or login with credentials at https://marketplace.zoom.us.
+* [Create an account](https://marketplace.zoom.us) or login with credentials.
 * Click the dropdown "Develop" from the upper right corner of the page and select "Build App".
 * Find "Server-to-Server OAuth", and click on "Create" button.
 * Name your application and type the name chosen in the text input field. Click on "Create" button.
@@ -34,8 +34,8 @@ order: 30
     * Click on "Done" button.
   * Click on "Continue" button.
 * Click on "Activate your app" button.
-* Download the Zoom SDK from https://developers.zoom.us/docs/meeting-sdk/android/get-started/install-sdk/
-* Traverse this outdated page https://developers.zoom.us/docs/meeting-sdk/android/build-an-app/#import-the-meeting-sdk-libraries and import the SDK libraries to your project.
+* Download the [Zoom SDK](https://developers.zoom.us/docs/meeting-sdk/android/get-started/install-sdk/).
+* Traverse this outdated page and [import the SDK libraries](https://developers.zoom.us/docs/meeting-sdk/android/build-an-app/#import-the-meeting-sdk-libraries) to your project.
 
 
 ## User instructions
